@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:5000';
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
 export const getUsers = async () => {
   const response = await fetch(`${API_URL}/users`);
@@ -39,12 +39,17 @@ export const createUser = async (userData) => {
 
 export const loginUser = async (email, password) => {
   const users = await getUsers();
+
   const existingUser = users.find(
-    (user) => user.email?.toLowerCase() === email.toLowerCase()
+    (user) =>
+      user.email?.toLowerCase() === email.toLowerCase()
   );
 
   if (existingUser) {
-    if (existingUser.password && existingUser.password !== password) {
+    if (
+      existingUser.password &&
+      existingUser.password !== password
+    ) {
       throw new Error('Invalid password');
     }
 
@@ -61,7 +66,9 @@ export const loginUser = async (email, password) => {
 };
 
 export const blogByUser = async (userId) => {
-  const response = await fetch(`${API_URL}/users/${userId}/blogs`);
+  const response = await fetch(
+    `${API_URL}/users/${userId}/blogs`
+  );
 
   if (!response.ok) {
     throw new Error('Failed to fetch blogs for user');
@@ -69,3 +76,4 @@ export const blogByUser = async (userId) => {
 
   return response.json();
 };
+
