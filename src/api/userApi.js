@@ -60,3 +60,12 @@ export const loginUser = async (email, password) => {
   return newUser;
 };
 
+export const blogByUser = async (userId) => {
+  const response = await fetch(`${API_URL}/users/${userId}/blogs`);
+
+  if (!response.ok) {
+    throw new Error('Failed to fetch blogs for user');
+  }
+
+  return response.json();
+};

@@ -8,6 +8,7 @@ function Auth() {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
+    name: '',
   })
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
@@ -23,8 +24,8 @@ function Auth() {
   const handleSubmit = async (event) => {
     event.preventDefault()
 
-    if (!formData.email || !formData.password) {
-      setError('Please enter both email and password.')
+    if (!formData.name || !formData.email || !formData.password) {
+      setError('Please enter all fields.')
       return
     }
 
@@ -50,6 +51,18 @@ function Auth() {
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+          <label className="mb-2 block text-sm font-medium text-slate-700">Name</label>
+          <input
+            type="text"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            placeholder="Your Name"
+            className="w-full rounded-xl border border-slate-300 bg-slate-50 px-3 py-2.5 text-slate-900 outline-none transition focus:border-violet-500 focus:bg-white"
+          />
+        </div>
+
         <div>
           <label className="mb-2 block text-sm font-medium text-slate-700">Email</label>
           <input

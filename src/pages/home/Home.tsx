@@ -153,31 +153,6 @@ function Home() {
               placeholder="Blog title"
             />
           </div>
-
-          <div>
-            <label className="mb-2 block text-sm font-medium text-slate-700">Author</label>
-            <input
-              type="text"
-              name="author"
-              value={formData.author}
-              onChange={handleChange}
-              className="w-full rounded-xl border border-slate-300 bg-slate-50 px-3 py-2.5 outline-none transition focus:border-violet-500 focus:bg-white"
-              placeholder="Author name"
-            />
-          </div>
-
-          <div>
-            <label className="mb-2 block text-sm font-medium text-slate-700">Author ID</label>
-            <input
-              type="text"
-              name="authorId"
-              value={formData.authorId}
-              onChange={handleChange}
-              className="w-full rounded-xl border border-slate-300 bg-slate-50 px-3 py-2.5 outline-none transition focus:border-violet-500 focus:bg-white"
-              placeholder="UUID or author id"
-            />
-          </div>
-
           <div className="md:col-span-2">
             <label className="mb-2 block text-sm font-medium text-slate-700">Content</label>
             <textarea
