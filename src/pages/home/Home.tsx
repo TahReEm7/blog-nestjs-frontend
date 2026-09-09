@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { createBlog, getBlogs } from '../../api/blogApi'
+import { useNavigate } from 'react-router-dom'
 
 interface Blog {
   id?: string
@@ -27,6 +28,7 @@ interface User {
 }
 
 function Home() {
+  const navigate = useNavigate()
   const [blogs, setBlogs] = useState<Blog[]>([])
   const [loading, setLoading] = useState<boolean>(true)
   const [error, setError] = useState<string>('')
@@ -88,6 +90,11 @@ function Home() {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
     event.preventDefault()
 
+    if (!currentUser) {
+      navigate('/auth')
+      return
+    }
+
     if (!formData.title || !formData.content || !formData.author || !formData.authorId) {
       setError('Please fill in title, content, author, and author ID.')
       return
@@ -138,7 +145,17 @@ function Home() {
       <section className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
         <div className="mb-5">
           <h2 className="text-2xl font-bold text-slate-900">Write a blog post</h2>
-          <p className="mt-1 text-sm text-slate-500">Create a new article using the blog entity fields.</p>
+          {currentUser ? (
+            <p className="mt-1 text-sm text-slate-500">Create a new article using the blog entity fields.</p>
+          ) : (
+            <button
+              type="button"
+              onClick={() => navigate('/auth')}
+              className="mt-1 text-sm font-semibold text-violet-600 hover:text-violet-800"
+            >
+              Sign in first to publish a blog.
+            </button>
+          )}
         </div>
 
         <form onSubmit={handleSubmit} className="grid gap-4 md:grid-cols-2">
