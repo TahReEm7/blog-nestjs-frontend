@@ -5,6 +5,7 @@ import Blog from './pages/blog/Blog'
 import Auth from './pages/auth/Auth'
 import BlogDetails from './pages/blog/BlogDetails';
 import MyBlogs from './pages/blog/MyBlogs';
+import Profile from './pages/profile/Profile';
 
 const App = () => {
   return (
@@ -15,6 +16,7 @@ const App = () => {
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/:id" element={<BlogDetails />} />
           <Route path="/my-blogs" element={<MyBlogs />} />
+          <Route path="/profile" element={<Profile />} />
           <Route path="/auth" element={<Auth />} />
         </Route>
       </Routes>

@@ -1,23 +1,37 @@
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+const API_URL = (import.meta.env.VITE_API_URL || 'http://localhost:5000').replace(/\/+$/, '');
+
+const readResponse = async (response, fallbackMessage) => {
+  const text = await response.text();
+  let data = null;
+
+  if (text) {
+    try {
+      data = JSON.parse(text);
+    } catch {
+      data = text;
+    }
+  }
+
+  if (!response.ok) {
+    const message = typeof data === 'object' && data !== null
+      ? data.message
+      : data;
+    throw new Error(Array.isArray(message) ? message.join(', ') : message || fallbackMessage);
+  }
+
+  return data;
+};
 
 export const getBlogs = async () => {
   const response = await fetch(`${API_URL}/blogs`);
 
-  if (!response.ok) {
-    throw new Error('Failed to fetch blogs');
-  }
-
-  return response.json();
+  return readResponse(response, 'Failed to fetch blogs');
 };
 
 export const getBlogById = async (id) => {
   const response = await fetch(`${API_URL}/blogs/${id}`);
 
-  if (!response.ok) {
-    throw new Error('Failed to fetch blog details');
-  }
-
-  return response.json();
+  return readResponse(response, 'Failed to fetch blog details');
 };
 
 export const createBlog = async (blogData) => {
@@ -32,12 +46,7 @@ export const createBlog = async (blogData) => {
     }),
   });
 
-  if (!response.ok) {
-    const message = await response.text();
-    throw new Error(message || 'Failed to create blog');
-  }
-
-  return response.json();
+  return readResponse(response, 'Failed to create blog');
 };
 
 export const updateBlog = async (id, blogData) => {
@@ -49,12 +58,7 @@ export const updateBlog = async (id, blogData) => {
     body: JSON.stringify(blogData),
   });
 
-  if (!response.ok) {
-    const message = await response.text();
-    throw new Error(message || 'Failed to update blog');
-  }
-
-  return response.json();
+  return readResponse(response, 'Failed to update blog');
 };
 
 export const deleteBlog = async (id) => {
@@ -62,20 +66,11 @@ export const deleteBlog = async (id) => {
     method: 'DELETE',
   });
 
-  if (!response.ok) {
-    const message = await response.text();
-    throw new Error(message || 'Failed to delete blog');
-  }
-
-  return response.json();
+  return readResponse(response, 'Failed to delete blog');
 };
 
 export const blogByUser = async (userId) => {
   const response = await fetch(`${API_URL}/blogs/user/${userId}`);
 
-  if (!response.ok) {
-    throw new Error('Failed to fetch blogs for user');
-  }
-
-  return response.json();
+  return readResponse(response, 'Failed to fetch blogs for user');
 };

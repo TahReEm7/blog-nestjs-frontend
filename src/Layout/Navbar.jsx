@@ -24,7 +24,8 @@ const Navbar = () => {
         <div className="hidden items-center gap-6 text-sm font-medium text-slate-600 md:flex">
           <Link to="/" className="transition hover:text-slate-900">Home</Link>
           <Link to="/blog" className="transition hover:text-slate-900">Blog</Link>
-             <Link to="/my-blogs" className="transition hover:text-slate-900">My Blogs</Link>
+           <Link to="/my-blogs" className="transition hover:text-slate-900">My Blogs</Link>
+         <Link to="/profile" className="transition hover:text-slate-900">Profile</Link>
         </div>
 
         {isLoggedIn ? (

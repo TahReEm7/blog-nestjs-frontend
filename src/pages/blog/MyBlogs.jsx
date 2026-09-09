@@ -40,12 +40,13 @@ function MyBlogs() {
     try {
       setSaving(true)
       setError('')
-      const updatedBlog = await updateBlog(editingBlog.id, {
+      const changes = {
         title: editingBlog.title,
         content: editingBlog.content,
-      })
+      }
+      const updatedBlog = await updateBlog(editingBlog.id, changes)
       setBlogs((currentBlogs) => currentBlogs.map((blog) => (
-        blog.id === updatedBlog.id ? updatedBlog : blog
+        blog.id === editingBlog.id ? { ...blog, ...changes, ...updatedBlog } : blog
       )))
       setEditingBlog(null)
     } catch (error) {
